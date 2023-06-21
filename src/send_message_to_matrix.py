@@ -1,6 +1,7 @@
 from ebbs import Builder
 import requests
 import logging
+import time
 
 class send_message_to_matrix(Builder):
 	def __init__(this, name="Send Message To Matrix"):
@@ -20,7 +21,10 @@ class send_message_to_matrix(Builder):
 			},
 			json = {
 				"msgtype": "m.text",
-				"body": this.message
+				"body": this.message,
+				"format": "org.matrix.custom.html",
+				"formatted_body": this.message
 			}
 		)
+		time.sleep(1) # Rate limit...?
 		logging.info(response.text)
